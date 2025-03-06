@@ -1,0 +1,61 @@
+
+以下是转换为Markdown格式的步骤说明：
+
+
+### 1. 启用 WSL 2 相关功能（以管理员身份打开 PowerShell）
+```powershell
+dism.exe /online /enable-feature /featurename:Microsoft-Windows-Subsystem-Linux /all /norestart
+dism.exe /online /enable-feature /featurename:VirtualMachinePlatform /all /norestart
+```
+**执行后重启计算机**，然后继续：
+```powershell
+wsl --set-default-version 2
+```
+
+
+### 2. 从 Microsoft Store 下载 Ubuntu 22.04
+（按原步骤操作，此处无问题）
+
+
+### 3. 导出已安装的 Ubuntu 实例到 E 盘
+```powershell
+wsl --shutdown Ubuntu-22.04
+wsl --export Ubuntu-22.04 E:\WSL\Ubuntu-22.04\backup.tar
+```
+
+
+### 4. 卸载 C 盘的原始实例
+```powershell
+wsl --unregister Ubuntu-22.04
+```
+
+
+### 5. 在 E 盘导入并重新注册
+```powershell
+New-Item -ItemType Directory -Path E:\WSL\Ubuntu-22.04
+wsl --import Ubuntu-22.04 E:\WSL\Ubuntu-22.04 E:\WSL\Ubuntu-22.04\backup.tar
+```
+
+
+### 6. 验证启动
+```powershell
+wsl -d Ubuntu-22.04
+```
+
+
+### 注意事项：
+1. 所有操作必须以**管理员身份**运行 PowerShell
+2. 路径中的 `E:\WSL\Ubuntu-22.04` 可自定义，但需提前创建
+3. 如果提示权限不足，请检查：
+   - E 盘是否为 NTFS 格式
+   - 目标文件夹是否已存在
+   - 是否使用了管理员权限
+
+如果遇到其他问题，请提供具体错误信息以便进一步排查。
+
+
+**格式说明**：
+- 使用 `###` 作为标题层级
+- 代码块用三个反引号包裹（```powershell）
+- 注意事项使用无序列表
+- 关键路径用代码块强调（如 `E:\WSL\Ubuntu-22.04`）
