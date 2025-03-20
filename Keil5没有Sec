@@ -1,0 +1,1 @@
+当在keil5里debug发现没有Sec时，可以检查setting里的debug页下的Use Simulator（使用模拟器）是否开启，若没有可以开启后再试试
